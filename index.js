@@ -5,7 +5,7 @@ var key, secret, tokenKey, tokenSecret
 var data = fs.readFile('keys.txt', "utf8", function (err, data){
    if(err)
       throw err;
-   var arr = data.split('\r\n');
+   var arr = data.replace('\r', '').split('\n');
    key = arr[0];
    secret = arr[1];
    tokenKey = arr[2];
@@ -18,13 +18,14 @@ var data = fs.readFile('keys.txt', "utf8", function (err, data){
    });
    
 
-   var params = {screen_name: 'nodejs'};
-   client.get('statuses/user_timeline', params, function(error, tweets, response) {
+   var params = {q: 'ethereum+OR+bitcoin+OR+#eth+OR+#btc'};
+   client.get('search/tweets', params, function(error, tweets, response) {
       if (!error) {
         console.log(tweets);
       }else 
       {
          console.log('error');
+         console.log(error);
       }
    })
 
